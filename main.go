@@ -46,14 +46,7 @@ func searchTitle(name string, url string, api string) (map[string]interface{}, e
 	return mainTitle, nil
 }
 
-func pushTitle(mainTitle map[string]interface{}, url string, api string, titleDir string) error {
-
-	addOps := map[string]interface{}{
-		"QualityProfileId": 4,
-		"RootFolderPath":   titleDir,
-		"addOptions": map[string]interface{}{"searchForMovie": true,
-			"monitor": "movieOnly"},
-	}
+func pushTitle(mainTitle map[string]interface{}, url string, api string, addOps map[string]interface{}) error {
 
 	for key, value := range addOps {
 		mainTitle[key] = value
@@ -83,4 +76,19 @@ func pushTitle(mainTitle map[string]interface{}, url string, api string, titleDi
 
 func main() {
 
+	titleDir := "/tv"
+	url := "http://localhost:7878/api/v3/movie/"
+	api := "d19a735894de42d1b9ec5c9874396922"
+	addOps := map[string]interface{}{
+		"QualityProfileId": 4,
+		"RootFolderPath":   titleDir,
+		"addOptions": map[string]interface{}{"searchForMovie": true,
+			"monitor": "movieOnly"},
+	}
+
+	results, _ := searchTitle("Coherence", url, api)
+	err := pushTitle(results, url, api, addOps)
+	if err != nil {
+		fmt.Printf("%s", err)
+	}
 }
