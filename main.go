@@ -76,11 +76,12 @@ func pushTitle(mainTitle map[string]interface{}, url string, api string, addOps 
 
 func main() {
 
-	titleDir := "/tv"
+	titleDir := "/movies/"
 	url := "http://localhost:7878/api/v3/movie/"
-	api := "d19a735894de42d1b9ec5c9874396922"
+	api := "769ba9a660bf419b9c1ad868f7149b06"
+
 	addOps := map[string]interface{}{
-		"QualityProfileId": 4,
+		"qualityProfileId": 1,
 		"RootFolderPath":   titleDir,
 		"addOptions": map[string]interface{}{"searchForMovie": true,
 			"monitor": "movieOnly"},
