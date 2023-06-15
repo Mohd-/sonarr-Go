@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 )
 
 // returning JSON data of searched title -> joining a predetermined addOptions then -> fed into Post request
@@ -76,6 +77,12 @@ func pushTitle(mainTitle map[string]interface{}, url string, api string, addOps 
 
 func main() {
 
+	if len(os.Args) < 2 {
+		fmt.Println("Please provide the title as a command-line argument.")
+		return
+	}
+
+	title := os.Args[1]
 	titleDir := "/movies/"
 	url := "http://localhost:7878/api/v3/movie/"
 	api := "769ba9a660bf419b9c1ad868f7149b06"
@@ -83,11 +90,12 @@ func main() {
 	addOps := map[string]interface{}{
 		"qualityProfileId": 1,
 		"RootFolderPath":   titleDir,
+		"monitored":        true,
 		"addOptions": map[string]interface{}{"searchForMovie": true,
 			"monitor": "movieOnly"},
 	}
 
-	results, _ := searchTitle("Coherence", url, api)
+	results, _ := searchTitle(title, url, api)
 	err := pushTitle(results, url, api, addOps)
 	if err != nil {
 		fmt.Printf("%s", err)
